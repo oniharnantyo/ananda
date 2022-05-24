@@ -6,6 +6,7 @@ export const Footer: React.FC = () => {
       <a
         href="https://github.com/pankod"
         target="_blank"
+        rel="norefferer noopener"
         className="block mb-3"
       >
         <img
