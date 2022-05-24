@@ -24,3 +24,4 @@ superplate is a Next.js all-in-one project generator. Create your project with t
 ## License
 
 MIT
+![image](https://user-images.githubusercontent.com/85720258/170057146-1afe76be-1d2e-48ba-a570-6246831fd31a.png)
