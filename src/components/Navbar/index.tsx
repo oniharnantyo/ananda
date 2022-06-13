@@ -2,13 +2,16 @@
 import { Button } from "components/button";
 import { useState } from "react";
 import {useHistory} from "react-router-dom"
-
+import MenuIcon from '@material-ui/icons/Menu'
+import MenuIconOpen from '@material-ui/icons/MenuOpen'
+import { MenuOpen } from "@material-ui/icons";
 interface navbarProps {
     currPage: string;
   }
 
 export const Navbar = ({currPage} : navbarProps) => {
-    const [openSideBarState, setOpenSideBarState] = useState(false)
+    const [openSideBar, setOpenSideBar] = useState(false)
+    const history = useHistory()
     const menus = [
         {
             name: 'Beranda',
@@ -23,36 +26,36 @@ export const Navbar = ({currPage} : navbarProps) => {
     return (
         <nav className="flex items-center bg-white p-1 flex-wrap px-20" >
             <Button
-                onClick={()=>setOpenSideBarState(!openSideBarState)}
-            >open menu
+                onClick={()=>setOpenSideBar(!openSideBar)}
+            >
+            {
+              openSideBar===false ? 
+              <MenuIcon /> : <MenuOpen />
+            }
             </Button>
             <a href="#" className="p-2 mr-4 inline-flex items-center">
                 <img
                     src="https://pbs.twimg.com/profile_images/248185979/logo_Vidyasena.bmp"
                     alt="logo vidyasena"
-                    className="h-12"
-                    height='12px'
-                    max-width={'10%'}
+                    className="h-8"
+                    height='10px'
+                    max-width={'8%'}
                 />
                 <div>
                     <span className=" text-xl text-primari font-medium uppercase tracking-wide px-3">
-                        Vidyāsenā
-                    </span>
-                    <br />
-                    <span className="text-xl text-primari uppercase tracking-wide px-3">
-                        Vihāra Vidyāloka
+                        Vidyāsenā - CMS
                     </span>
                 </div>
             </a>
         {
-            openSideBarState && (
+            openSideBar && (
                 <div className="flex flex-col flex-auto flex-shrink-0 antialiased bg-primary-blue-three-200 text-gray-800 z-10">
                 <div className="fixed flex flex-col top-0 left-0 w-64 bg-primary-blue-three-200 h-full">
                   <div className="">
                     <ul className="flex flex-col py-4 space-y-1">
                       <li className="px-5">
                           <div className="text-xl font-medium tracking-wide text-gray-500 float-left">Menu</div>
-                        <Button className="justify-end justify-items-end float-right" onClick={()=>setOpenSideBarState(!openSideBarState)}>X</Button> 
+                        <Button className="justify-end justify-items-end float-right" onClick={()=>setOpenSideBar(!openSideBar)}>X</Button> 
                       </li>
                       <li>
                         <a href="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
@@ -138,7 +141,7 @@ export const Navbar = ({currPage} : navbarProps) => {
                         <span>Admin</span>
                     </a>
                     }
-                    <Button>Logout</Button>
+                    <Button onClick={()=>{history.push('/login')}}>Logout</Button>
                 </div>
             </div>
         </nav>
