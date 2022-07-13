@@ -1,9 +1,13 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
-  purge: ["./pages/**/*.tsx", "./src/**/*.tsx"],
+  purge: ["./pages/**/*.jsx", "./src/**/*.jsx"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty:{
+        'width': 'width'
+      }
+    },
     textColor: {
       'primari': '#022855',
       'primary-second' : '#034087',
@@ -21,7 +25,9 @@ module.exports = {
       'red' : '#ff0000',
       'reddish'  : '#cccdf0',
       'asphalt':'#262626',
-      'asphalt-secondary' : '#434343'
+      'white': '#ffffff',
+      'asphalt-secondary' : '#434343',
+      'black-secondary' : '#141414'
     }
   },
   variants: {
