@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container } from "components";
+import AuthService from "services/auth.service";
 import { Layout, Menu, Space, Typography, Dropdown, Button } from 'antd'
 import {
   UserOutlined,
@@ -11,13 +12,17 @@ import {
 } from '@ant-design/icons'
 import { BookOutlined } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 const { Header, Sider, Content } = Layout
 
 export const Navbar = ({
   currentPage,
   content
 }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const history = useHistory()
+  const username = AuthService.getCurrentUser().name || ''
+  const [collapsed, setCollapsed] = useState(true);
+
   const generateGreetings = () => {
     const hours = new Date().getHours();
     const isMorning = hours >= 5 && hours < 10;
@@ -41,31 +46,32 @@ export const Navbar = ({
     }
   };
 
-  const menu = (<Menu
-    style={{
-      width: '8em',
-    }}
-    items={[
-      {
-        key: 'profile',
-        icon: <UserOutlined />,
-        label: (
-          <a rel="noopener noreferrer">
-            Profile
-          </a>
-        ),
-      },
-      {
-        key: 'logout',
-        icon: <LogoutOutlined />,
-        label: (
-          <a rel="noopener noreferrer" href="/login">
-            Logout
-          </a>
-        ),
-      },
-    ]}
-  />)
+  const menu = (
+    <Menu
+      style={{
+        width: '8em',
+      }}
+      items={[
+        {
+          key: 'profile',
+          icon: <UserOutlined />,
+          label: (
+            <a rel="noopener noreferrer">
+              Profile
+            </a>
+          ),
+        },
+        {
+          key: 'logout',
+          icon: <LogoutOutlined />,
+          onClick: (() => {
+            AuthService.logout();
+            history.push('/login')
+          }),
+          label: 'Logout',
+        },
+      ]}
+    />)
 
   return (
     <Container>
@@ -131,9 +137,9 @@ export const Navbar = ({
               >
                 <Space>
                   <Typography style={{ color: 'white' }}>
-                    YourName
+                    {username}
                   </Typography>
-                  <UserOutlined style={{ color: 'white' }}/>
+                  <UserOutlined style={{ color: 'white' }} />
                 </Space>
               </Dropdown>
             </Space>
@@ -144,7 +150,7 @@ export const Navbar = ({
             style={{
               padding: 24,
               minHeight: 280,
-              background:'#1e1e1e'
+              background: '#1e1e1e'
             }}
           >
             {content}

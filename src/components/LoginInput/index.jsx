@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import authService from "services/auth.service";
+import AuthService from "services/auth.service";
 import { Modal } from "antd";
 
 export const LoginInput = () => {
@@ -10,8 +10,6 @@ export const LoginInput = () => {
     const [message, setMessage] = useState('')
     const [showFailedModal, setShowFailedModal] = useState(false)
     const [showForgotModal, setShowForgotModal] = useState(false)
-    console.log(showFailedModal, showForgotModal)
-
 
     const history = useHistory();
     const email = "aaa@gmail.com";
@@ -24,27 +22,27 @@ export const LoginInput = () => {
             modalError()
         }
     };
-    
+
     const handleUsernameInput = (event) => {
         setUsername(event.target.value);
     };
     const handlePasswordInput = (event) => {
         setPassword(event.target.value);
-        
         //handle login by enter
-        document.getElementById('passwordInput').onkeydown = (e)=>{
-            console.log(e)
-            if(e.key==="Enter"){
-                basicValidation(username,event.target.value)
+        document.getElementById('passwordInput').onkeydown = (e) => {
+            if (e.key === "Enter") {
+                handleLogin(username, event.target.value)
             }
         }
     };
 
     const handleLogin = (username, password) => {
-        authService.login(username, password)
+        AuthService.login(username, password)
             .then(() => {
-                history.push('/home')
-                window.location.reload();
+                if(AuthService.getCurrentUser()){
+                    history.push('/home')
+                    window.location.reload();
+                }
             },
                 error => {
                     const resMessage = (
@@ -54,6 +52,7 @@ export const LoginInput = () => {
                     ) || error.message || error.toString;
                     setMessage(resMessage)
                     setLoading(false)
+                    modalError()
                 }
             )
     }
@@ -62,9 +61,9 @@ export const LoginInput = () => {
         Modal.info({
             title: "I forgor 💀",
             onOk() { setShowForgotModal(false) },
-            maskClosable:true,
+            maskClosable: true,
             content: (<p>Please contact : +6969...</p>),
-            style:({top:20})
+            style: ({ top: 20 })
         })
     }
 
@@ -72,10 +71,10 @@ export const LoginInput = () => {
         Modal.error({
             title: "Failed to Login",
             onOk() { setShowFailedModal(false) },
-            maskClosable:true,
+            maskClosable: true,
             content: (<p>Please try again</p>),
-            afterClose(){document.getElementById("usernameInput").focus();},
-            style:({top:20})
+            afterClose() { document.getElementById("usernameInput").focus(); },
+            style: ({ top: 20 })
         })
     }
 
@@ -110,18 +109,18 @@ export const LoginInput = () => {
                             <div className="px-4 pb-2 pt-4">
                                 <button
                                     className="block w-1/2 p-2 text-md rounded-md bg-primary-active hover:bg-primary-second focus:outline-none mx-auto"
-                                    onClick={() => basicValidation(username, password)}
-                                // onClick={() => handleLogin(username, password)}
+                                    // onClick={() => basicValidation(username, password)}
+                                    onClick={() => handleLogin(username, password)}
                                 >
                                     Sign In
                                 </button>
                             </div>
                         </div>
                         {
-            }
+                        }
                     </div>
                 </div>
             </section>
-          
+
         </div>);
 };

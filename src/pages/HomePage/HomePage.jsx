@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { DeleteOutlined, EditOutlined, SearchOutlined } from "@material-ui/icons";
 import { PlusOutlined } from '@ant-design/icons'
 import { AddEvent } from "./AddEvent";
+import mockEventData from "./../../constants/mockEvent.json"
 
 function Home() {
+    console.log('home')
     const [searchValue, setSearchValue] = useState('')
     const [openNewEventDialog, setOpenNewEventDialog] = useState(false)
-    console.log(openNewEventDialog)
-
     const columns = [
         {
             title: 'Event ID',
@@ -55,35 +55,37 @@ function Home() {
         },
     ];
 
-    const data = [
-        {
-            key: '1',
-            id: 11111,
-            title: 'Acara A 2022',
-            dateStart: 'besok',
-            dateCreate: 'besok',
-            dateUpdate: 'besok',
-            location: 'Vihara Vidyaloka Yogyakarta'
-        },
-        {
-            key: '2',
-            id: 22222,
-            title: 'Acara B 2022',
-            dateStart: 'besok',
-            dateCreate: 'besok',
-            dateUpdate: 'besok',
-            location: 'Vihara Vidyaloka Yogyakarta'
-        },
-        {
-            key: '3',
-            id: 33333,
-            title: 'Acara C 2022',
-            dateStart: 'besok',
-            dateCreate: 'besok',
-            dateUpdate: 'besok',
-            location: 'Vihara Vidyaloka Yogyakarta'
-        },
-    ];
+    const data = mockEventData
+    
+    // [
+    //     {
+    //         key: '1',
+    //         id: 11111,
+    //         title: 'Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022s',
+    //         dateStart: 'besok',
+    //         dateCreate: 'besok',
+    //         dateUpdate: 'besok',
+    //         location: 'Vihara Vidyaloka YogyakartaAcara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022'
+    //     },
+    //     {
+    //         key: '2',
+    //         id: 22222,
+    //         title: 'Acara B 2022',
+    //         dateStart: 'besok',
+    //         dateCreate: 'besok',
+    //         dateUpdate: 'besok',
+    //         location: 'Vihara Vidyaloka Yogyakarta'
+    //     },
+    //     {
+    //         key: '3',
+    //         id: 33333,
+    //         title: 'Acara C 2022',
+    //         dateStart: 'besok',
+    //         dateCreate: 'besok',
+    //         dateUpdate: 'besok',
+    //         location: 'Vihara Vidyaloka Yogyakarta'
+    //     },
+    // ];
 
     const content = () => {
         return (
