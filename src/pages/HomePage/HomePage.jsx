@@ -55,38 +55,6 @@ function Home() {
         },
     ];
 
-    const data = mockEventData
-    
-    // [
-    //     {
-    //         key: '1',
-    //         id: 11111,
-    //         title: 'Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022s',
-    //         dateStart: 'besok',
-    //         dateCreate: 'besok',
-    //         dateUpdate: 'besok',
-    //         location: 'Vihara Vidyaloka YogyakartaAcara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022Acara A 2022'
-    //     },
-    //     {
-    //         key: '2',
-    //         id: 22222,
-    //         title: 'Acara B 2022',
-    //         dateStart: 'besok',
-    //         dateCreate: 'besok',
-    //         dateUpdate: 'besok',
-    //         location: 'Vihara Vidyaloka Yogyakarta'
-    //     },
-    //     {
-    //         key: '3',
-    //         id: 33333,
-    //         title: 'Acara C 2022',
-    //         dateStart: 'besok',
-    //         dateCreate: 'besok',
-    //         dateUpdate: 'besok',
-    //         location: 'Vihara Vidyaloka Yogyakarta'
-    //     },
-    // ];
-
     const content = () => {
         return (
             <>
@@ -107,7 +75,7 @@ function Home() {
                         minHeight: 280,
                     }}
                     columns={columns}
-                    dataSource={data}
+                    dataSource={mockEventData}
                     pagination={{ position: 'bottom' }}
                     bordered
                 />
@@ -121,7 +89,7 @@ function Home() {
                         onCancel={() => setOpenNewEventDialog(false)}
                         maskClosable={false}
                         width={window.screen.width * 98 / 100}
-                        bodyStyle={{height: window.screen.height * 70 / 100}}
+                        // bodyStyle={{height: window.screen.height * 70 / 100}}
                         footer={[
                             <Button key="submit" type="primary"  onClick={() =>setOpenNewEventDialog(false)}>
                               Save as draft

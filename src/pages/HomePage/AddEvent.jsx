@@ -1,14 +1,24 @@
-import { Space, Col, Row, Typography, Input, DatePicker } from "antd";
-import { format, intervalToDuration } from "date-fns";
-import { id } from 'date-fns/locale';
-import { useState, useEffect } from "react";
+import { Space, Col, Row, Typography, Input, DatePicker, Button, Modal } from "antd";
+import { useState } from "react";
 import moment from 'moment'
 import { UploadImage } from "./UploadImage";
-
-const {TextArea} = Input
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+import DocumentEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+const { TextArea } = Input
 
 
 export const AddEvent = () => {
+    const [showWarning, setShowWarning] = useState(false)
+    const [text, setText] = useState("Input description here..");
+    const descTemplate = require("../../constants/descriptionTemplate.txt")
+
+    const handleSetTemplate = () => {
+        setText('')
+        fetch(descTemplate)
+            .then(response => response.text())
+            .then(text => setText(text))
+        setShowWarning(false)
+    }
 
     return (
         <>
@@ -17,7 +27,7 @@ export const AddEvent = () => {
                     <Typography>
                         Manage Event
                     </Typography>
-                    <Space direction="vertical" size={'small'} style={{width:400}}>
+                    <Space direction="vertical" size={'small'} style={{ width: 400 }}>
                         <Typography>
                             Title
                         </Typography>
@@ -32,10 +42,8 @@ export const AddEvent = () => {
                             Date & time (WIB)
                         </Typography>
                         <DatePicker
-                            style={{width:400}}
+                            style={{ width: 400 }}
                             format="YYYY-MM-DD HH:mm"
-                            //   disabledDate={disabledDate}
-                            //   disabledTime={disabledDateTime}
                             showTime={{
                                 defaultValue: moment('00:00:00', 'HH:mm:ss'),
                             }}
@@ -52,10 +60,39 @@ export const AddEvent = () => {
                     </Space>
                 </Col>
                 <Col span={12}>
-                    <Typography>
-                        Event Description
-                    </Typography>
+                    <Space align="end" style={{ float: 'right' }}>
+                        <Button onClick={() => setShowWarning(true)}>Input Template</Button>
+                    </Space>
+                    <Space style={{ marginBottom: '15px' }}>
+                        <Typography>
+                            Event Description
+                        </Typography>
+                    </Space>
+                    <CKEditor
+                        editor={DocumentEditor}
+                        data={text}
+                        onReady={editor => {
+                            // You can store the "editor" and use when it is needed.
+                            // console.log('Editor is ready to use!', editor);
+                            editor.ui.getEditableElement().parentElement.insertBefore(
+                                editor.ui.view.toolbar.element,
+                                editor.ui.getEditableElement())
+                        }}
+                        onChange={(event, editor) => {
+                            const data = editor.getData();
+                            // console.log({ event, editor, data });
+                        }}
+                    />
                 </Col>
+                <Modal
+                    onCancel={() => setShowWarning(false)}
+                    onOk={() => handleSetTemplate()}
+                    title="Warning"
+                    visible={showWarning}
+                >
+                    <p>Clicking OK will replace your current Event Description work</p>
+                    <p>This action is irreversible!</p>
+                </Modal>
             </Row>
 
         </>
