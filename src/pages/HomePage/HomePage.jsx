@@ -10,6 +10,8 @@ function Home() {
     console.log('home')
     const [searchValue, setSearchValue] = useState('')
     const [openNewEventDialog, setOpenNewEventDialog] = useState(false)
+    const [openEditEventDialog, setOpenEditEventDialog] = useState(false)
+    const [selectedEvent, setSelectedEvent] = useState(null)
     const columns = [
         {
             title: 'Event ID',
@@ -46,9 +48,13 @@ function Home() {
             align: 'center',
             title: 'Action',
             key: 'action',
-            render: (_) => (
+            render: (record) => (
                 <Space size="small">
-                    <a><EditOutlined /></a>
+                    <a onClick={()=>{
+                        setOpenEditEventDialog(true)
+                        setSelectedEvent(record)
+                        // console.log(record)
+                        }}><EditOutlined /></a>
                     <a><DeleteOutlined style={{ color: "red" }} /></a>
                 </Space>
             ),
@@ -78,9 +84,17 @@ function Home() {
                     dataSource={mockEventData}
                     pagination={{ position: 'bottom' }}
                     bordered
+                    on
+                    // onRow={(record, rowIndex)=>({
+                    //    onClick: ()=>{
+                    //         const idx = rowIndex
+                    //         console.log('row clicked' + record + idx)
+                    //         console.log(record)
+                    //     }
+                    // })}
                 />
 
-                {
+                {<>
                     <Modal
                         title="Add New Event"
                         centered
@@ -105,7 +119,28 @@ function Home() {
                     >
                         <AddEvent />
                     </Modal>
-                }
+                    <Modal
+                    title="Edit Event"
+                    centered
+                    visible={openEditEventDialog}
+                    onOk={() => {setOpenEditEventDialog(false);setSelectedEvent(null)}}
+                    onCancel={() => {setOpenEditEventDialog(false);setSelectedEvent(null)}}
+                    maskClosable={false}
+                    width={window.screen.width * 98 / 100}
+                    // bodyStyle={{height: window.screen.height * 70 / 100}}
+                    footer={[
+                        <Button
+                          key="link"
+                          type="primary"
+                          onClick={() =>{setOpenEditEventDialog(false);setSelectedEvent(null)}}
+                        >
+                          Submit
+                        </Button>
+                      ]}
+                >
+                    <AddEvent selectedEvent={selectedEvent}/>
+                </Modal>
+                </>}
             </>
         )
 
