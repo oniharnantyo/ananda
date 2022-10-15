@@ -1,0 +1,10 @@
+.next
+next-env.d.ts
+node_modules
+functions/node_modules
+package-lock.json
+public
+out
+.eslintrc
+functions/.eslintrc.js
+.vscode/settings.json
