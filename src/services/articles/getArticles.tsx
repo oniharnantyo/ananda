@@ -35,7 +35,7 @@ export const getArticles = async (
     const { data } = response;
 
     if (data.status == '00') {
-      return response;
+      return data;
     } else {
       throw new Error(data.message);
     }

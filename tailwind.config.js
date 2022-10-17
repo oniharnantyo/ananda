@@ -127,5 +127,8 @@ module.exports = {
       },
     },
   },
+  corePlugins: {
+    preflight: false,
+  },
   plugins: [require('prettier-plugin-tailwindcss')],
 };

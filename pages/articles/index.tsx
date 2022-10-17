@@ -1,37 +1,22 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
-import { useRouter } from 'next/router';
+import Head from 'next/head';
 
-import { getArticles } from '@services/articles/getArticles';
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { ArticleTable } from '@components/organisms/Table';
+import { StyledLayout } from '@components/templates/Layout';
 
 type ArticlesProps = {
   accessToken: string;
 };
 
 const Articles: NextPage<ArticlesProps> = (props) => {
-  const router = useRouter();
-
-  const {
-    data: articles,
-    error,
-    refetch,
-    isFetching,
-  } = useQuery(['getArticles'], () => getArticles({ page: 1, perPage: 9 }, props?.accessToken), {
-    retry: false,
-  });
-
-  useEffect(() => {
-    if (articles) {
-      console.log(articles.data);
-    }
-  });
-
-  if (error) {
-    router.push('/auth/login');
-  }
-
-  return <h1 className="text-3xl font-bold underline">Articles</h1>;
+  return (
+    <>
+      <Head>Articles</Head>
+      <StyledLayout>
+        <ArticleTable accessToken={props.accessToken} />
+      </StyledLayout>
+    </>
+  );
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

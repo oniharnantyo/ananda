@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { IAuth } from '@domains/Auth';
+import { IAuth } from '@domains/auth';
 import { auth } from '@services/auth/auth';
 import * as cookie from 'cookie';
 

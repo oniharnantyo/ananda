@@ -15,6 +15,7 @@
     "@next/bundle-analyzer": "^12.3.1",
     "@types/cookie": "^0.5.1",
     "@types/set-cookie-parser": "^2.4.2",
+    "antd": "^4.23.5",
     "axios": "^1.1.2",
     "axios-auth-refresh": "^3.3.4",
     "cookie": "^0.5.0",
