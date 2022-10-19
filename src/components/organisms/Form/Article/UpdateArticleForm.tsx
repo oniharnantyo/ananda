@@ -3,22 +3,27 @@ import { useRouter } from 'next/router';
 import { SendOutlined } from '@ant-design/icons';
 import { Editor } from '@components/molecules/Editor';
 import { UploadField } from '@components/molecules/Field';
-import { createArticle } from '@services/articles/createArticle';
+import { IArticle } from '@domains/article';
+import { getArticle } from '@services/articles/getArticle';
+import { updateArticle } from '@services/articles/updateArticle';
 import { Button, Col, Form, Input, Row } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
-import { CreateArticleFormRules } from './CreateArticleForm.rules';
-import { CreateArticleFormProps } from './CreateArticleForm.types';
+import { getUpdateArticleFormRules } from './UpdateArticleForm.rules';
+import { UpdateArticleFormProps } from './UpdateArticleForm.types';
 
 const { TextArea } = Input;
 
-const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
+const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
   const router = useRouter();
+  const [form] = Form.useForm();
 
+  const [article, setArticle] = useState<IArticle>();
   const [image, setImage] = useState<File>();
   const [imagePreview, setImagePreview] = useState('');
   const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(false);
 
   const updateImage = (e) => {
     if (e.target.files.length) {
@@ -26,6 +31,32 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
       setImagePreview(URL.createObjectURL(e.target.files[0]));
     }
   };
+
+  const {
+    data: articlesData,
+    error,
+    refetch,
+    isFetching,
+  } = useQuery(['getArticle'], () => getArticle(id, accessToken), {
+    retry: false,
+  });
+
+  useEffect(() => {
+    if (articlesData) {
+      const { data } = articlesData;
+
+      setArticle(data);
+      setImagePreview(data.imageURL);
+      setContent(data.content);
+
+      form.setFieldsValue({
+        title: data.title,
+        author: data.author,
+        description: data.description,
+        imageDescription: data.imageDescription,
+      });
+    }
+  }, [articlesData, form]);
 
   const updateContent = (value: string) => {
     setContent(value);
@@ -36,11 +67,11 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
     setImage(null as unknown as File);
   };
 
-  const rules = CreateArticleFormRules(image as File, content);
+  const rules = getUpdateArticleFormRules(content);
 
   const handleSubmit = async (values: any) => {
     try {
-      setLoading(true);
+      setLoadingButton(true);
 
       const req = {
         title: values.title,
@@ -51,19 +82,19 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
         content: values.content,
       };
 
-      const res = await createArticle(req, accessToken);
+      const res = await updateArticle(id, req, accessToken);
 
       if (res) {
         router.push('/articles');
       }
     } catch (error: unknown) {
-      setLoading(false);
+      setLoadingButton(false);
       throw error;
     }
   };
 
   return (
-    <Form layout="vertical" onFinish={handleSubmit}>
+    <Form layout="vertical" onFinish={handleSubmit} form={form}>
       <Row>
         <Col span={12} className="pr-2">
           <Form.Item label="Title" name="title" rules={rules.title}>
@@ -72,7 +103,12 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
           <Form.Item label="Author" name="author" rules={rules.author}>
             <Input />
           </Form.Item>
-          <Form.Item label="Description" name="description" rules={rules.description}>
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={rules.description}
+            initialValue={article?.description}
+          >
             <TextArea rows={4} />
           </Form.Item>
           <Form.Item label="Image" name="image" rules={rules.image}>
@@ -92,7 +128,7 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
         </Col>
         <Col span={12} className="pl-2">
           <Form.Item label="Content" name="content" rules={rules.content}>
-            <Editor name="content" onChange={updateContent} />
+            <Editor name="content" onChange={updateContent} initialValue={article?.content} />
           </Form.Item>
         </Col>
       </Row>
@@ -105,7 +141,7 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
                 size="large"
                 htmlType="submit"
                 icon={<SendOutlined />}
-                loading={loading}
+                loading={loadingButton}
               >
                 Submit
               </Button>
@@ -117,4 +153,4 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
   );
 };
 
-export default CreateArticleForm;
+export default UpdateArticleForm;

@@ -8,14 +8,13 @@ import Search from 'antd/lib/input/Search';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { columns } from './ArticleTable.columns';
+import { getArticleTableColumns } from './ArticleTable.columns';
 import { ArticleTableProps } from './ArticleTable.types';
 
 const ArticleTable: ArticleTableProps = ({ accessToken }) => {
   const router = useRouter();
 
   const [articles, setArticles] = useState([] as Array<IArticle>);
-
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(0);
   const [total, setTotal] = useState(0);
@@ -53,6 +52,8 @@ const ArticleTable: ArticleTableProps = ({ accessToken }) => {
   const handleCreate = () => {
     router.push('/articles/create');
   };
+
+  const columns = getArticleTableColumns(router, accessToken, refetch);
 
   return (
     <>

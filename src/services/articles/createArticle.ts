@@ -1,9 +1,6 @@
 import { privateAxios } from '@lib/axios';
 
-
-
 import { createArticleProps } from './createArticle.types';
-
 
 export const createArticle = async (
   { title, author, description, image, imageDescription, content }: createArticleProps,

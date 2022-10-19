@@ -1,17 +1,21 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-import { CreateArticle as TCreateArticle } from '@components/templates/Articles';
+import { UpdateArticle as TUpdateArticle } from '@components/templates/Articles';
 
-type CreateArticleProps = {
+type UpdateArticleProps = {
   accessToken: string;
 };
 
-const CreateArticle: NextPage<CreateArticleProps> = (props) => {
+const UpdateArticle: NextPage<UpdateArticleProps> = (props) => {
+  const router = useRouter();
+  const { id } = router.query;
+
   return (
     <>
       <Head>Articles</Head>
-      <TCreateArticle title="Create Article" accessToken={props.accessToken} />
+      <TUpdateArticle title="Update Article" id={id as string} accessToken={props.accessToken} />
     </>
   );
 };
@@ -30,4 +34,4 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-export default CreateArticle;
+export default UpdateArticle;

@@ -1,4 +1,5 @@
-import { CreateArticleForm, FormSection } from '@components/organisms/Form';
+import { FormSection } from '@components/organisms/Form';
+import { CreateArticleForm } from '@components/organisms/Form/Article';
 
 import { StyledLayout } from '../Layout';
 import { CreateArticleProps } from './CreateArticle.types';

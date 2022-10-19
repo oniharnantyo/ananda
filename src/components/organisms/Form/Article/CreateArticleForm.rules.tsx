@@ -1,4 +1,4 @@
-export const CreateArticleFormRules = (image: File, content: string) => {
+export const getCreateArticleFormRules = (image: File, content: string) => {
   return {
     title: [{ required: true }],
     author: [{ required: true }],
@@ -10,7 +10,6 @@ export const CreateArticleFormRules = (image: File, content: string) => {
           if (image) {
             return Promise.resolve();
           }
-          console.log('asdfasdf');
 
           return Promise.reject();
         },

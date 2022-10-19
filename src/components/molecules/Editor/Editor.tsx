@@ -2,12 +2,13 @@ import { Editor as TinyMCE } from '@tinymce/tinymce-react';
 
 import { EditorProps } from './Editor.types';
 
-const Editor: EditorProps = ({ name, onChange }) => {
+const Editor: EditorProps = ({ name, initialValue, onChange }) => {
   return (
     <>
       <TinyMCE
         textareaName={name}
         onEditorChange={onChange}
+        initialValue={initialValue}
         init={{
           height: 500,
           menubar: false,

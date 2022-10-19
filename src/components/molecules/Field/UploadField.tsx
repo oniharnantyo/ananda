@@ -33,6 +33,7 @@ const UploadField: UploadFieldProps = ({ imagePreview, handleChange, handleDelet
         name="image"
         style={{ display: 'none' }}
         onChange={handleChange}
+        accept={'image/*'}
       />
     </>
   );
