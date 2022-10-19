@@ -7,6 +7,7 @@ import { createArticle } from '@services/articles/createArticle';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { useState } from 'react';
 
+import { CreateArticleFormRules } from './CreateArticleForm.rules';
 import { CreateArticleFormProps } from './CreateArticleForm.types';
 
 const { TextArea } = Input;
@@ -16,6 +17,8 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
 
   const [image, setImage] = useState<File>();
   const [imagePreview, setImagePreview] = useState('');
+  const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const updateImage = (e) => {
     if (e.target.files.length) {
@@ -24,13 +27,21 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
     }
   };
 
+  const updateContent = (value: string) => {
+    setContent(value);
+  };
+
   const handleImagePreviewDelete = () => {
     setImagePreview('');
     setImage(null as unknown as File);
   };
 
+  const rules = CreateArticleFormRules(image as File, content);
+
   const handleSubmit = async (values: any) => {
     try {
+      setLoading(true);
+
       const req = {
         title: values.title,
         author: values.title,
@@ -40,17 +51,14 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
         content: values.content,
       };
 
-      console.log(req);
-
       const res = await createArticle(req, accessToken);
-
-      console.log(res);
 
       if (res) {
         router.push('/articles');
       }
     } catch (error: unknown) {
-      console.log(error);
+      setLoading(false);
+      throw error;
     }
   };
 
@@ -58,29 +66,33 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
     <Form layout="vertical" onFinish={handleSubmit}>
       <Row>
         <Col span={12} className="pr-2">
-          <Form.Item label="Title" name="title">
+          <Form.Item label="Title" name="title" rules={rules.title}>
             <Input />
           </Form.Item>
-          <Form.Item label="Author" name="author">
+          <Form.Item label="Author" name="author" rules={rules.author}>
             <Input />
           </Form.Item>
-          <Form.Item label="Description" name="description">
+          <Form.Item label="Description" name="description" rules={rules.description}>
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item label="Image">
+          <Form.Item label="Image" name="image" rules={rules.image}>
             <UploadField
               imagePreview={imagePreview}
               handleChange={updateImage}
               handleDelete={handleImagePreviewDelete}
             />
           </Form.Item>
-          <Form.Item label="Image Description" name="imageDescription">
+          <Form.Item
+            label="Image Description"
+            name="imageDescription"
+            rules={rules.imageDescription}
+          >
             <TextArea rows={4} />
           </Form.Item>
         </Col>
         <Col span={12} className="pl-2">
-          <Form.Item label="Content" name="content">
-            <Editor name="content" />
+          <Form.Item label="Content" name="content" rules={rules.content}>
+            <Editor name="content" onChange={updateContent} />
           </Form.Item>
         </Col>
       </Row>
@@ -88,7 +100,13 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
         <Col span={24}>
           <div className="float-right">
             <Form.Item>
-              <Button type="primary" size="large" htmlType="submit" icon={<SendOutlined />}>
+              <Button
+                type="primary"
+                size="large"
+                htmlType="submit"
+                icon={<SendOutlined />}
+                loading={loading}
+              >
                 Submit
               </Button>
             </Form.Item>
