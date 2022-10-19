@@ -1,17 +1,17 @@
 import { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 
-import { Articles as TArticles } from '@components/templates/Articles';
+import { CreateArticle } from '@components/templates/Articles';
 
-type ArticlesProps = {
+type CreateArticleProps = {
   accessToken: string;
 };
 
-const Articles: NextPage<ArticlesProps> = (props) => {
+const Articles: NextPage<CreateArticleProps> = (props) => {
   return (
     <>
       <Head>Articles</Head>
-      <TArticles accessToken={props.accessToken} />
+      <CreateArticle title="Create Article" accessToken={props.accessToken} />
     </>
   );
 };
