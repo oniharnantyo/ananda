@@ -1,19 +1,16 @@
-import { GetServerSidePropsContext } from 'next';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
-export default function Home() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
-}
+import { useEffect } from 'react';
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const {
-    req: { cookies },
-  } = context;
+const Home: NextPage = () => {
+  const router = useRouter();
 
-  const { accessToken } = cookies;
-  const isAuthorized = accessToken !== undefined;
-  return {
-    props: {
-      isAuthorized,
-    },
-  };
-}
+  useEffect(() => {
+    router.push('/articles');
+  });
+
+  return <></>;
+};
+
+export default Home;

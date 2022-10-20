@@ -35,7 +35,6 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
   const {
     data: articlesData,
     error,
-    refetch,
     isFetching,
   } = useQuery(['getArticle'], () => getArticle(id, accessToken), {
     retry: false,
@@ -111,7 +110,7 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
           >
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item label="Image" name="image" rules={rules.image}>
+          <Form.Item label="Image" name="image">
             <UploadField
               imagePreview={imagePreview}
               handleChange={updateImage}

@@ -27,7 +27,7 @@ const menus = [
   {
     key: 'freebooks',
     icon: <BookOutlined />,
-    label: <Link href="/blogs">Freebook</Link>,
+    label: <Link href="/freebooks">Freebook</Link>,
   },
 ];
 
@@ -35,7 +35,8 @@ const Sidebar = () => {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
 
-  const pathname = router.pathname.replace('/', '');
+  const path = router.pathname.split('/');
+  const pathname = path.length ? path[1] : '';
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -50,7 +51,6 @@ const Sidebar = () => {
           <MenuFoldOutlined style={{ color: 'white' }} />
         )}
       </Space>
-      <div className="logo" />
       <Menu mode="inline" theme="dark" defaultSelectedKeys={[pathname]} items={menus} />
     </Sider>
   );
