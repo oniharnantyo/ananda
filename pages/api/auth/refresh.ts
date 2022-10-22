@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { IAuth } from '@domains/auth';
 import refresh from '@services/auth/refresh';
 import * as cookie from 'cookie';
 import { getCookie } from 'cookies-next';
@@ -17,7 +16,7 @@ const Refresh = async (req: NextApiRequest, res: NextApiResponse) => {
       refreshToken: refreshToken as string,
     });
 
-    const _data = data.data as IAuth;
+    const _data = data.data;
 
     Object.entries(returnedHeaders).forEach((keyArr) =>
       res.setHeader(keyArr[0], keyArr[1] as string)
