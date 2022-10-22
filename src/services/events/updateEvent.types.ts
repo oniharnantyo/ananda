@@ -1,4 +1,4 @@
-export type updateArticleProps = {
+export type updateEventProps = {
   title: string;
   location: string;
   startAt: Date;

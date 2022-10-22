@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { IEvent } from '@domains/event';
-import { getEvents } from '@services/event/getEvents';
+import { getEvents } from '@services/events/getEvents';
 import { Button, Col, Row, Table } from 'antd';
 import Search from 'antd/lib/input/Search';
 import { useEffect, useState } from 'react';

@@ -1,10 +1,10 @@
 import { privateAxios } from '@lib/axios';
 
-import { updateArticleProps } from './updateEvent.types';
+import { updateEventProps } from './updateEvent.types';
 
-export const updateArticle = async (
+export const updateEvent = async (
   id: string,
-  { title, location, startAt, image, imageDescription, content }: updateArticleProps,
+  { title, location, startAt, image, imageDescription, content }: updateEventProps,
   accessToken: string
 ) => {
   try {
@@ -19,7 +19,7 @@ export const updateArticle = async (
     formData.append('imageDescription', imageDescription);
     formData.append('content', content);
 
-    const endpoint = `/articles/${id}`;
+    const endpoint = `/events/${id}`;
     const conf = {
       headers: {
         'Content-Type': 'multipart/form-data',

@@ -4,7 +4,7 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { DeleteModal } from '@components/molecules/Modal';
 import { IArticle } from '@domains/article';
 import { IEvent } from '@domains/event';
-import { deleteEvent } from '@services/event/deleteEvent';
+import { deleteEvent } from '@services/events/deleteEvent';
 import formatDate from '@utils/formatDate';
 import { Button, Space } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
