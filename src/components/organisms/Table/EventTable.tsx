@@ -22,7 +22,6 @@ const EventTable: EventTableProps = ({ accessToken }) => {
 
   const {
     data: eventsData,
-    error,
     refetch,
     isFetching,
   } = useQuery(

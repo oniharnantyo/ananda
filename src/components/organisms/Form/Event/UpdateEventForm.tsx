@@ -37,11 +37,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
     }
   };
 
-  const {
-    data: eventData,
-    error,
-    isFetching,
-  } = useQuery(['getEvent'], () => getEvent(id, accessToken), {
+  const { data: eventData } = useQuery(['getEvent'], () => getEvent(id, accessToken), {
     retry: false,
   });
 

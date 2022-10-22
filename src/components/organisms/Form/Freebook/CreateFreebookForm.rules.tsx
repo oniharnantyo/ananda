@@ -17,6 +17,6 @@ export const getCreateFreebookFormRules = (image: File) => {
       },
     ],
     imageDescription: [{ required: true }],
-    url: [{ required: true, type: 'url' }],
+    url: [{ required: true }, { type: 'url' }],
   };
 };

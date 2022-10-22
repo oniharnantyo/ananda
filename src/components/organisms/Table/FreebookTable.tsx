@@ -22,7 +22,6 @@ const FreebookTable: FreebookTableProps = ({ accessToken }) => {
 
   const {
     data: freebooksData,
-    error,
     refetch,
     isFetching,
   } = useQuery(

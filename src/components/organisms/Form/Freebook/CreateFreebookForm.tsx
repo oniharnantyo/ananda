@@ -4,6 +4,7 @@ import { SendOutlined } from '@ant-design/icons';
 import { UploadField } from '@components/molecules/Field';
 import { createFreebook } from '@services/freebooks/createFreebook';
 import { Button, Col, Form, Input, Row } from 'antd';
+import { Rule } from 'antd/lib/form';
 import { useState } from 'react';
 
 import { getCreateFreebookFormRules } from './CreateFreebookForm.rules';
@@ -18,7 +19,7 @@ const CreateFreebookForm: CreateFreebookFormProps = ({ accessToken }) => {
   const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const updateImage = (e) => {
+  const updateImage = (e: any) => {
     if (e.target.files.length) {
       setImage(e.target.files[0]);
       setImagePreview(URL.createObjectURL(e.target.files[0]));
@@ -69,7 +70,7 @@ const CreateFreebookForm: CreateFreebookFormProps = ({ accessToken }) => {
           <Form.Item label="Description" name="description" rules={rules.description}>
             <TextArea rows={4} placeholder="Input description" />
           </Form.Item>
-          <Form.Item label="Freebook Link" name="url" rules={rules.url}>
+          <Form.Item label="Freebook Link" name="url" rules={rules.url as Rule[]}>
             <Input placeholder="Input freebook link" />
           </Form.Item>
         </Col>

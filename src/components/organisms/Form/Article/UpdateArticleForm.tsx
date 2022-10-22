@@ -25,18 +25,14 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
   const [content, setContent] = useState('');
   const [loadingButton, setLoadingButton] = useState(false);
 
-  const updateImage = (e) => {
+  const updateImage = (e: any) => {
     if (e.target.files.length) {
       setImage(e.target.files[0]);
       setImagePreview(URL.createObjectURL(e.target.files[0]));
     }
   };
 
-  const {
-    data: articlesData,
-    error,
-    isFetching,
-  } = useQuery(['getArticle'], () => getArticle(id, accessToken), {
+  const { data: articlesData } = useQuery(['getArticle'], () => getArticle(id, accessToken), {
     retry: false,
   });
 

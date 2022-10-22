@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import generateGreetings from '@utils/generateGreetings';
 import { Dropdown, Layout, Menu, Space, Typography } from 'antd';

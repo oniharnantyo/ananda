@@ -20,7 +20,7 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const updateImage = (e) => {
+  const updateImage = (e: any) => {
     if (e.target.files.length) {
       setImage(e.target.files[0]);
       setImagePreview(URL.createObjectURL(e.target.files[0]));

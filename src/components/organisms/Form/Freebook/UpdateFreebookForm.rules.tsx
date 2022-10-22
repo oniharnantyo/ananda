@@ -4,6 +4,6 @@ export const getUpdateFreebookFormRules = () => {
     author: [{ required: true }],
     description: [{ required: true }],
     imageDescription: [{ required: true }],
-    url: [{ required: true, type: 'url' }],
+    url: [{ required: true }, { type: 'url' }],
   };
 };

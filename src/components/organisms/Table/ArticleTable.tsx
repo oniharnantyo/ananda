@@ -22,7 +22,6 @@ const ArticleTable: ArticleTableProps = ({ accessToken }) => {
 
   const {
     data: articlesData,
-    error,
     refetch,
     isFetching,
   } = useQuery(

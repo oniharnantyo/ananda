@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 interface IUploadFieldProps {
   imagePreview: string;
-  handleChange: (e) => void;
+  handleChange: (e: any) => void;
   handleDelete: () => void;
 }
 
