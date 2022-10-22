@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { IAuth } from '@domains/auth';
 import { auth } from '@services/auth/auth';
 import * as cookie from 'cookie';
 
@@ -13,7 +12,7 @@ const Login = async (req: NextApiRequest, res: NextApiResponse) => {
       password: body?.password,
     });
 
-    const _data = data.data as IAuth;
+    const _data = data.data;
 
     res.setHeader('set-cookie', [
       cookie.serialize('accessToken', _data.accessToken, {
