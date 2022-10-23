@@ -11,7 +11,7 @@ const AuthLayout: AuthLayoutProps = ({ children }) => {
               <p className="my-4 text-3xl font-medium text-white">Content Management System</p>
             </div>
           </div>
-          <div className="z-0 flex w-full items-center justify-center bg-brand-700 px-0 text-center md:px-16 lg:w-1/2">
+          <div className="z-0 flex w-full items-center justify-center bg-brand-700 px-8 md:px-16 lg:px-24 text-center lg:w-1/2">
             {children}
           </div>
         </section>

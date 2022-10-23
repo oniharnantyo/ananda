@@ -1,18 +1,11 @@
 import Image from 'next/image';
 
-const LogoImage = () => {
-  return (
-    <>
-      <Image
-        src="https://pbs.twimg.com/profile_images/248185979/logo_Vidyasena.bmp"
-        alt="logo vidyasena"
-        className="mx-auto flex h-36 rounded-lg"
-        height="500"
-        width="300"
-        max-width={'40%'}
-      />
-    </>
-  );
+import logo from '@assets/images/vs-logo.svg';
+
+import { LogoImageProps } from './LogoImage.types';
+
+const LogoImage: LogoImageProps = ({ alt, width, height, className }) => {
+  return <Image src={logo} alt={alt} className={className} width={width} height={height} />;
 };
 
 export default LogoImage;
