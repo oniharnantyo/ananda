@@ -71,7 +71,7 @@ const LoginForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loadingButton}>
+        <Button type="primary" size="large" htmlType="submit" loading={loadingButton}>
           Sign In
         </Button>
       </Form.Item>

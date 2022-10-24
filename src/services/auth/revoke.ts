@@ -2,7 +2,7 @@ import { publicAxios } from '@lib/axios';
 
 import { IRevokeProps } from './revoke.types';
 
-export const refresh = async (props: IRevokeProps) => {
+export const revoke = async (props: IRevokeProps) => {
   try {
     const endpoint = `/auth/revoke`;
     const conf = {

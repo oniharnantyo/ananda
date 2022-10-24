@@ -1,40 +1,50 @@
+import { useRouter } from 'next/router';
+
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import generateGreetings from '@utils/generateGreetings';
 import { Dropdown, Layout, Menu, Space, Typography } from 'antd';
 
 const { Header } = Layout;
 
-const dropdownItems = (
-  <Menu
-    style={{
-      width: '8em',
-    }}
-    items={[
-      {
-        key: 'profile',
-        icon: <UserOutlined />,
-        label: <a rel="noopener noreferrer">Profile</a>,
-      },
-      {
-        key: 'logout',
-        icon: <LogoutOutlined />,
-        onClick: () => {
-          // history.push('/login');
-        },
-        label: 'Logout',
-      },
-    ]}
-  />
-);
-
 const StyledHeader = () => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/auth/logout');
+
+      if (!res.ok) {
+        const resData = await res.json();
+        throw new Error(resData.message);
+      }
+
+      return router.push('/auth/login');
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
+
+  const dropdownItems = (
+    <Menu
+      items={[
+        {
+          key: 'logout',
+          icon: <LogoutOutlined />,
+          onClick: () => {
+            handleLogout();
+          },
+          label: 'Logout',
+        },
+      ]}
+    />
+  );
+
   const username = 'Admin';
 
   return (
     <Header>
-      <Space align="end" style={{ float: 'right', marginRight: '20px' }}>
+      <Space align="end" className="float-right">
         <Typography style={{ color: 'white' }}>{generateGreetings()},</Typography>
-
         <Dropdown
           overlay={dropdownItems}
           placement="bottom"
@@ -43,8 +53,8 @@ const StyledHeader = () => {
           }}
         >
           <Space>
-            <Typography style={{ color: 'white' }}>{username}</Typography>
-            <UserOutlined style={{ color: 'white' }} />
+            <Typography className="text-white">{username}</Typography>
+            <UserOutlined className="text-white" />
           </Space>
         </Dropdown>
       </Space>
