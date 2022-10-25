@@ -1,5 +1,5 @@
 import { LogoImage } from '@components/atoms/LogoImage';
-import { Button, Layout, Modal, Space } from 'antd';
+import { Button, Layout, Modal } from 'antd';
 
 import { LoginForm } from '../Form/Login';
 
@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <Layout className="py-12 px-10 md:px-16 lg:px-20 rounded-lg">
       <div className="">
-        <LogoImage height={15} />
+        <LogoImage height={15} isResponsive />
       </div>
       <LoginForm />
       <Button type="link" onClick={handleForgotPassword}>

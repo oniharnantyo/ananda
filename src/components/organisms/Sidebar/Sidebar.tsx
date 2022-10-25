@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 
 import {
   AlignLeftOutlined,
@@ -8,7 +8,8 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Space } from 'antd';
+import { LogoImage } from '@components/atoms/LogoImage';
+import { Col, Layout, Menu, Row, Space, Typography } from 'antd';
 import { useState } from 'react';
 
 const { Sider } = Layout;
@@ -31,26 +32,43 @@ const menus = [
   },
 ];
 
+const getPathname = (router: NextRouter) => {
+  const path = router.pathname.split('/');
+  return path.length ? path[1] : '';
+};
+
 const Sidebar = () => {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
 
-  const path = router.pathname.split('/');
-  const pathname = path.length ? path[1] : '';
+  const pathname = getPathname(router);
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
-      <Space
-        align="end"
-        style={{ fontSize: '20px', margin: '14px' }}
+      <Row
+        align="middle"
+        style={{ fontSize: '20px' }}
+        className={!collapsed ? 'm-[0.575rem]' : 'mx-[0.575rem] my-[0.9rem]'}
         onClick={() => setCollapsed(!collapsed)}
       >
-        {collapsed ? (
-          <MenuUnfoldOutlined style={{ color: 'white' }} />
-        ) : (
-          <MenuFoldOutlined style={{ color: 'white' }} />
+        <Col>
+          {collapsed ? (
+            <MenuUnfoldOutlined className="text-white" />
+          ) : (
+            <MenuFoldOutlined className="text-white" />
+          )}
+        </Col>
+        {!collapsed && (
+          <>
+            <Col className="pt-2">
+              <LogoImage height={25} isResponsive={false} />
+            </Col>
+            <Col>
+              <Typography className="text-white text-sm text-center">Vidyasena CMS</Typography>
+            </Col>
+          </>
         )}
-      </Space>
+      </Row>
       <Menu mode="inline" theme="dark" defaultSelectedKeys={[pathname]} items={menus} />
     </Sider>
   );
