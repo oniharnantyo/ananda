@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { SendOutlined } from '@ant-design/icons';
 import { Editor } from '@components/molecules/Editor';
 import { UploadField } from '@components/molecules/Field';
+import { ErrorMessage } from '@components/molecules/Message';
 import { IArticle } from '@domains/article';
 import { getArticle } from '@services/articles/getArticle';
 import { updateArticle } from '@services/articles/updateArticle';
@@ -32,9 +33,13 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
     }
   };
 
-  const { data: articlesData } = useQuery(['getArticle'], () => getArticle(id, accessToken), {
-    retry: false,
-  });
+  const { data: articlesData, error } = useQuery(
+    ['getArticle'],
+    () => getArticle(id, accessToken),
+    {
+      retry: false,
+    }
+  );
 
   useEffect(() => {
     if (articlesData) {
@@ -51,7 +56,11 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
         imageDescription: data.imageDescription,
       });
     }
-  }, [articlesData, form]);
+
+    if (error) {
+      ErrorMessage(error);
+    }
+  }, [articlesData, form, error]);
 
   const updateContent = (value: string) => {
     setContent(value);
@@ -84,7 +93,7 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
       }
     } catch (error: unknown) {
       setLoadingButton(false);
-      throw error;
+      ErrorMessage(error);
     }
   };
 

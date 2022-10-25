@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { PlusOutlined } from '@ant-design/icons';
+import { ErrorMessage } from '@components/molecules/Message';
 import { IFreebook } from '@domains/freebook';
 import { getFreebooks } from '@services/freebooks/getFreebooks';
 import { Button, Col, Row, Table } from 'antd';
@@ -22,6 +23,7 @@ const FreebookTable: FreebookTableProps = ({ accessToken }) => {
 
   const {
     data: freebooksData,
+    error,
     refetch,
     isFetching,
   } = useQuery(
@@ -42,7 +44,11 @@ const FreebookTable: FreebookTableProps = ({ accessToken }) => {
 
       setFreebooks(data);
     }
-  }, [freebooksData]);
+
+    if (error) {
+      ErrorMessage(error);
+    }
+  }, [freebooksData, error]);
 
   const handleSearch = (value: string) => {
     setSearch(value);

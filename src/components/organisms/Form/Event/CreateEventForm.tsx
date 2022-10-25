@@ -5,12 +5,13 @@ import { Editor } from '@components/molecules/Editor';
 import { UploadField } from '@components/molecules/Field';
 import { createEvent } from '@services/events/createEvent';
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
+import { RangePickerProps } from 'antd/lib/date-picker';
+import moment from 'moment';
 import { useState } from 'react';
 
 import { getCreateEventFormRules } from './CreateEventForm.rules';
 import { CreateEventFormProps } from './CreateEventForm.types';
-import { RangePickerProps } from 'antd/lib/date-picker';
-import moment from 'moment';
+import { ErrorMessage } from '@components/molecules/Message';
 
 const { TextArea } = Input;
 
@@ -65,7 +66,7 @@ const CreateEventForm: CreateEventFormProps = ({ accessToken }) => {
       }
     } catch (error: unknown) {
       setLoadingButton(false);
-      throw error;
+      ErrorMessage(error);
     }
   };
 

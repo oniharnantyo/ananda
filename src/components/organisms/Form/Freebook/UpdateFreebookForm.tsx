@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { SendOutlined } from '@ant-design/icons';
 import { UploadField } from '@components/molecules/Field';
+import { ErrorMessage } from '@components/molecules/Message';
 import { getFreebook } from '@services/freebooks/getFreebook';
 import { updateFreebook } from '@services/freebooks/updateFreebook';
 import { Button, Col, Form, Input, Row } from 'antd';
@@ -29,9 +30,13 @@ const UpdateFreebookForm: UpdateFreebookFormProps = ({ id, accessToken }) => {
     }
   };
 
-  const { data: freebooksData } = useQuery(['getFreebook'], () => getFreebook(id, accessToken), {
-    retry: false,
-  });
+  const { data: freebooksData, error } = useQuery(
+    ['getFreebook'],
+    () => getFreebook(id, accessToken),
+    {
+      retry: false,
+    }
+  );
 
   useEffect(() => {
     if (freebooksData) {
@@ -47,7 +52,11 @@ const UpdateFreebookForm: UpdateFreebookFormProps = ({ id, accessToken }) => {
         url: data.url,
       });
     }
-  }, [freebooksData, form]);
+
+    if (error) {
+      ErrorMessage(error);
+    }
+  }, [freebooksData, form, error]);
 
   const handleImagePreviewDelete = () => {
     setImagePreview('');
@@ -76,7 +85,7 @@ const UpdateFreebookForm: UpdateFreebookFormProps = ({ id, accessToken }) => {
       }
     } catch (error: unknown) {
       setLoadingButton(false);
-      throw error;
+      ErrorMessage(error);
     }
   };
 

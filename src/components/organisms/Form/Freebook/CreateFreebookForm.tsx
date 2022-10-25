@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 import { getCreateFreebookFormRules } from './CreateFreebookForm.rules';
 import { CreateFreebookFormProps } from './CreateFreebookForm.types';
+import { ErrorMessage } from '@components/molecules/Message';
 
 const { TextArea } = Input;
 
@@ -53,7 +54,7 @@ const CreateFreebookForm: CreateFreebookFormProps = ({ accessToken }) => {
       }
     } catch (error: unknown) {
       setLoading(false);
-      throw error;
+      ErrorMessage(error);
     }
   };
 

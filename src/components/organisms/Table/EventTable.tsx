@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 
 import { PlusOutlined } from '@ant-design/icons';
+import { ErrorMessage } from '@components/molecules/Message';
 import { IEvent } from '@domains/event';
 import { getEvents } from '@services/events/getEvents';
-import { Button, Col, Row, Table } from 'antd';
+import { Button, Col, Row, Table, message } from 'antd';
 import Search from 'antd/lib/input/Search';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -22,6 +23,7 @@ const EventTable: EventTableProps = ({ accessToken }) => {
 
   const {
     data: eventsData,
+    error,
     refetch,
     isFetching,
   } = useQuery(
@@ -42,7 +44,11 @@ const EventTable: EventTableProps = ({ accessToken }) => {
 
       setEvents(data);
     }
-  }, [eventsData]);
+
+    if (error) {
+      ErrorMessage(error);
+    }
+  }, [eventsData, error]);
 
   const handleSearch = (value: string) => {
     setSearch(value);

@@ -1,6 +1,7 @@
 import { NextRouter } from 'next/router';
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { ErrorMessage } from '@components/molecules/Message';
 import { DeleteModal } from '@components/molecules/Modal';
 import { IFreebook } from '@domains/freebook';
 import { deleteFreebook } from '@services/freebooks/deleteFreebook';
@@ -73,7 +74,7 @@ export const getFreebookTableColumns = (
                       refetch();
                     }
                   } catch (error: unknown) {
-                    throw error;
+                    ErrorMessage(error);
                   }
                 },
                 () => {

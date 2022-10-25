@@ -1,6 +1,7 @@
 import { NextRouter } from 'next/router';
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { ErrorMessage } from '@components/molecules/Message';
 import { DeleteModal } from '@components/molecules/Modal';
 import { IArticle } from '@domains/article';
 import { deleteArticle } from '@services/articles/deleteArticle';
@@ -73,7 +74,7 @@ export const getArticleTableColumns = (
                       refetch();
                     }
                   } catch (error: unknown) {
-                    throw error;
+                    ErrorMessage(error);
                   }
                 },
                 () => {

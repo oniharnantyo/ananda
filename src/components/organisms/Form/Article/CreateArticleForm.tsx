@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { SendOutlined } from '@ant-design/icons';
 import { Editor } from '@components/molecules/Editor';
 import { UploadField } from '@components/molecules/Field';
+import { ErrorMessage } from '@components/molecules/Message';
 import { createArticle } from '@services/articles/createArticle';
 import { Button, Col, Form, Input, Row } from 'antd';
 import { useState } from 'react';
@@ -58,7 +59,7 @@ const CreateArticleForm: CreateArticleFormProps = ({ accessToken }) => {
       }
     } catch (error: unknown) {
       setLoading(false);
-      throw error;
+      ErrorMessage(error);
     }
   };
 

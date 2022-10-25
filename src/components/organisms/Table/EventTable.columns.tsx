@@ -8,6 +8,7 @@ import { deleteEvent } from '@services/events/deleteEvent';
 import formatDate from '@utils/formatDate';
 import { Button, Space } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { ErrorMessage } from '@components/molecules/Message';
 
 const dateFormat = 'DD-MMM-YYYY HH:mm';
 
@@ -83,7 +84,7 @@ export const getEventTableColumns = (
                       refetch();
                     }
                   } catch (error: unknown) {
-                    throw error;
+                    ErrorMessage(error);
                   }
                 },
                 () => {

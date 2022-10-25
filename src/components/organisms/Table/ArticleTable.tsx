@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { PlusOutlined } from '@ant-design/icons';
+import { ErrorMessage } from '@components/molecules/Message';
 import { IArticle } from '@domains/article';
 import { getArticles } from '@services/articles/getArticles';
 import { Button, Col, Row, Table } from 'antd';
@@ -22,6 +23,7 @@ const ArticleTable: ArticleTableProps = ({ accessToken }) => {
 
   const {
     data: articlesData,
+    error,
     refetch,
     isFetching,
   } = useQuery(
@@ -42,7 +44,11 @@ const ArticleTable: ArticleTableProps = ({ accessToken }) => {
 
       setArticles(data);
     }
-  }, [articlesData]);
+
+    if (error) {
+      ErrorMessage(error);
+    }
+  }, [articlesData, error]);
 
   const handleSearch = (value: string) => {
     setSearch(value);

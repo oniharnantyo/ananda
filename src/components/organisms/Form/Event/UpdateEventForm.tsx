@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { SendOutlined } from '@ant-design/icons';
 import { Editor } from '@components/molecules/Editor';
 import { UploadField } from '@components/molecules/Field';
+import { ErrorMessage } from '@components/molecules/Message';
 import { getEvent } from '@services/events/getEvent';
 import { updateEvent } from '@services/events/updateEvent';
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
@@ -37,7 +38,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
     }
   };
 
-  const { data: eventData } = useQuery(['getEvent'], () => getEvent(id, accessToken), {
+  const { data: eventData, error } = useQuery(['getEvent'], () => getEvent(id, accessToken), {
     retry: false,
   });
 
@@ -55,7 +56,11 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
         imageDescription: data.imageDescription,
       });
     }
-  }, [eventData, form]);
+
+    if (error) {
+      ErrorMessage(error);
+    }
+  }, [eventData, form, error]);
 
   const updateContent = (value: string) => {
     setContent(value);
@@ -88,7 +93,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
       }
     } catch (error: unknown) {
       setLoadingButton(false);
-      throw error;
+      ErrorMessage(error);
     }
   };
 
