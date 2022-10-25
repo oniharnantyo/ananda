@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ErrorMessage } from '@components/molecules/Message';
 import { IEvent } from '@domains/event';
 import { getEvents } from '@services/events/getEvents';
-import { Button, Col, Row, Table, message } from 'antd';
+import { Button, Col, Row, Table } from 'antd';
 import Search from 'antd/lib/input/Search';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';

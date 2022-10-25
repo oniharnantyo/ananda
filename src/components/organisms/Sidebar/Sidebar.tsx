@@ -9,7 +9,7 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import { LogoImage } from '@components/atoms/LogoImage';
-import { Col, Layout, Menu, Row, Space, Typography } from 'antd';
+import { Col, Layout, Menu, Row, Typography } from 'antd';
 import { useState } from 'react';
 
 const { Sider } = Layout;
