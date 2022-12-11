@@ -16,7 +16,7 @@ const Login = () => {
   };
 
   return (
-    <Layout className="py-12 px-10 md:px-16 lg:px-20 rounded-lg">
+    <Layout className="py-12 px-10 md:px-10 rounded-lg">
       <div className="">
         <LogoImage height={15} isResponsive />
       </div>
