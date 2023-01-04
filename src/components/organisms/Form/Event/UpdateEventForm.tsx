@@ -4,6 +4,7 @@ import { SendOutlined } from '@ant-design/icons';
 import { Editor } from '@components/molecules/Editor';
 import { UploadField } from '@components/molecules/Field';
 import { ErrorMessage } from '@components/molecules/Message';
+import { IEvent } from '@domains/event';
 import { getEvent } from '@services/events/getEvent';
 import { updateEvent } from '@services/events/updateEvent';
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
@@ -26,6 +27,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
     return current && current < moment().add(-1, 'days').endOf('day');
   };
 
+  const [event, setEvent] = useState<IEvent>();
   const [image, setImage] = useState<File>();
   const [imagePreview, setImagePreview] = useState('');
   const [content, setContent] = useState('');
@@ -46,6 +48,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
     if (eventData) {
       const { data } = eventData;
 
+      setEvent(data);
       setImagePreview(data.imageURL);
       setContent(data.content);
 
@@ -134,7 +137,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
         </Col>
         <Col span={12} className="pl-2">
           <Form.Item label="Content" name="content" rules={rules.content}>
-            <Editor name="content" onChange={updateContent} />
+            <Editor name="content" onChange={updateContent} initialValue={event?.content} />
           </Form.Item>
         </Col>
       </Row>
