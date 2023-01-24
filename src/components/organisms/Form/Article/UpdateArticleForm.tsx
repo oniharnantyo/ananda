@@ -79,7 +79,7 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
 
       const req = {
         title: values.title,
-        author: values.title,
+        author: values.author,
         description: values.description,
         image: image as File,
         imageDescription: values.imageDescription,
