@@ -1,6 +1,6 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
 
-export const formatDate = (date: Date, format: string) =>
-  moment(date).locale('id').local().format(format);
+export const formatDate = (date: Date, format: string) => dayjs(date).locale('id').format(format);
 
 export default formatDate;

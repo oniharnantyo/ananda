@@ -3,15 +3,15 @@ import { useRouter } from 'next/router';
 import { SendOutlined } from '@ant-design/icons';
 import { Editor } from '@components/molecules/Editor';
 import { UploadField } from '@components/molecules/Field';
+import { ErrorMessage } from '@components/molecules/Message';
 import { createEvent } from '@services/events/createEvent';
 import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
 import { RangePickerProps } from 'antd/lib/date-picker';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import { getCreateEventFormRules } from './CreateEventForm.rules';
 import { CreateEventFormProps } from './CreateEventForm.types';
-import { ErrorMessage } from '@components/molecules/Message';
 
 const { TextArea } = Input;
 
@@ -20,7 +20,7 @@ const CreateEventForm: CreateEventFormProps = ({ accessToken }) => {
 
   const startAtformat = 'YYYY-MM-DD HH:mm';
   const disabledDate: RangePickerProps['disabledDate'] = (current: any) => {
-    return current && current < moment().add(-1, 'days').endOf('day');
+    return current && current < dayjs().add(-1, 'days').endOf('day');
   };
 
   const [image, setImage] = useState<File>();
@@ -56,7 +56,7 @@ const CreateEventForm: CreateEventFormProps = ({ accessToken }) => {
         startAt: values.startAt,
         image: image as File,
         imageDescription: values.imageDescription,
-        content: values.content,
+        content: content,
       };
 
       const res = await createEvent(req, accessToken);
@@ -85,7 +85,7 @@ const CreateEventForm: CreateEventFormProps = ({ accessToken }) => {
               style={{ width: '100%' }}
               format={startAtformat}
               showTime={{
-                defaultValue: moment('00:00:00', 'HH:mm:ss'),
+                defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
               }}
               disabledDate={disabledDate}
             />

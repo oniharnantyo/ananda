@@ -83,7 +83,7 @@ const UpdateArticleForm: UpdateArticleFormProps = ({ id, accessToken }) => {
         description: values.description,
         image: image as File,
         imageDescription: values.imageDescription,
-        content: values.content,
+        content: content,
       };
 
       const res = await updateArticle(id, req, accessToken);

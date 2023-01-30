@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import '../styles/globals.css';

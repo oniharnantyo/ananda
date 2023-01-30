@@ -7,9 +7,11 @@ import { ErrorMessage } from '@components/molecules/Message';
 import { IEvent } from '@domains/event';
 import { getEvent } from '@services/events/getEvent';
 import { updateEvent } from '@services/events/updateEvent';
-import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
+import { Button, Col, ConfigProvider, DatePicker, Form, Input, Row } from 'antd';
 import { RangePickerProps } from 'antd/lib/date-picker';
-import moment from 'moment';
+import locale from 'antd/locale/id_ID';
+import dayjs from 'dayjs';
+import 'dayjs/locale/id';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -24,7 +26,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
 
   const startAtformat = 'YYYY-MM-DD HH:mm';
   const disabledDate: RangePickerProps['disabledDate'] = (current: any) => {
-    return current && current < moment().add(-1, 'days').endOf('day');
+    return current && current < dayjs().add(-1, 'days').endOf('day');
   };
 
   const [event, setEvent] = useState<IEvent>();
@@ -48,22 +50,22 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
     if (eventData) {
       const { data } = eventData;
 
-      setEvent(data);
-      setImagePreview(data.imageURL);
-      setContent(data.content);
+      setEvent(data as IEvent);
+      setImagePreview(event?.imageURL as string);
+      setContent(event?.content as string);
 
       form.setFieldsValue({
-        title: data.title,
-        location: data.location,
-        startAt: moment(data.startAt.toString(), startAtformat),
-        imageDescription: data.imageDescription,
+        title: event?.title,
+        location: event?.location,
+        startAt: dayjs(event?.startAt.toString()),
+        imageDescription: event?.imageDescription,
       });
     }
 
     if (error) {
       ErrorMessage(error);
     }
-  }, [eventData, form, error]);
+  }, [event, eventData, form, error]);
 
   const updateContent = (value: string) => {
     setContent(value);
@@ -86,7 +88,7 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
         startAt: values.startAt,
         image: image as File,
         imageDescription: values.imageDescription,
-        content: values.content,
+        content: content,
       };
 
       const res = await updateEvent(id, req, accessToken);
@@ -110,16 +112,19 @@ const UpdateEventForm: UpdateEventFormProps = ({ id, accessToken }) => {
           <Form.Item label="Location" name="location" rules={rules.location}>
             <Input placeholder="Input location" />
           </Form.Item>
-          <Form.Item label="Start At" name="startAt" rules={rules.startAt}>
-            <DatePicker
-              style={{ width: '100%' }}
-              format={startAtformat}
-              showTime={{
-                defaultValue: moment('00:00:00', 'HH:mm:ss'),
-              }}
-              disabledDate={disabledDate}
-            />
-          </Form.Item>
+          <ConfigProvider locale={locale}>
+            <Form.Item label="Start At" name="startAt" rules={rules.startAt}>
+              <DatePicker
+                style={{ width: '100%' }}
+                showTime={{
+                  defaultValue: dayjs('00:00:00', 'HH:mm:ss'),
+                }}
+                name="startAt"
+                format={startAtformat}
+                disabledDate={disabledDate}
+              />
+            </Form.Item>
+          </ConfigProvider>
           <Form.Item label="Image" name="image">
             <UploadField
               imagePreview={imagePreview}

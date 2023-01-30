@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { ErrorMessage } from '@components/molecules/Message';
 import generateGreetings from '@utils/generateGreetings';
 import { Dropdown, Layout, Menu, Space, Typography } from 'antd';
 
@@ -20,7 +21,7 @@ const StyledHeader = () => {
 
       return router.push('/auth/login');
     } catch (error: unknown) {
-      console.log(error);
+      ErrorMessage(error);
     }
   };
 
@@ -43,7 +44,7 @@ const StyledHeader = () => {
 
   return (
     <Header>
-      <Space align="end" className="float-right">
+      <Space align="center" className="float-right">
         <Typography style={{ color: 'white' }}>{generateGreetings()},</Typography>
         <Dropdown
           overlay={dropdownItems}
