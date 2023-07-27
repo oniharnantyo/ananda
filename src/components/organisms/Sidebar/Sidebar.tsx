@@ -15,11 +15,11 @@ import { useState } from 'react';
 const { Sider } = Layout;
 
 const menus = [
-  {
-    key: 'events',
-    icon: <CalendarOutlined />,
-    label: <Link href="/events">Event</Link>,
-  },
+  // {
+  //   key: 'events',
+  //   icon: <CalendarOutlined />,
+  //   label: <Link href="/events">Event</Link>,
+  // },
   {
     key: 'articles',
     icon: <AlignLeftOutlined />,

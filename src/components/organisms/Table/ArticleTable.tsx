@@ -70,7 +70,7 @@ const ArticleTable: ArticleTableProps = ({ accessToken }) => {
         <Col span={8}>
           <div className="float-right">
             <Button type="primary" size="large" icon={<PlusOutlined />} onClick={handleCreate}>
-              New Event
+              New Article
             </Button>
           </div>
         </Col>
